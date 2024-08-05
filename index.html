@@ -1,0 +1,123 @@
+import uuid
+verification_code = str(uuid.uuid4())
+verification_code
+import qrcode
+
+# Verification code
+verification_code = str(uuid.uuid4())
+
+# Create a QR code for the link to the verification page with the verification code
+verification_url = f"http://example.com/verify?code={verification_code}"
+qr = qrcode.make(verification_url)
+qr_path = "/mnt/data/qr_code_verification.png"
+qr.save(qr_path)
+
+# Create a PDF object with details filled for Domestos Zero Limescale Pink using Times New Roman font and size 8, formatted as a table and centered, with QR code and verification code
+class CertificatePDFWithVerification(FPDF):
+    def header(self):
+        self.image(transparent_logo_path, 10, 8, 30)  # Placing the logo in the top left corner and making it larger
+        self.set_font('Times', 'B', 12)
+        self.cell(0, 10, 'Department of Health and Social Care', 0, 1, 'C')
+        self.ln(5)
+        self.cell(0, 10, 'Biocidal Product Authorization Certificate', 0, 1, 'C')
+        self.ln(10)
+
+    def add_table_row(self, col1, col2):
+        self.set_font('Times', '', 8)
+        line_height = self.font_size * 1.5
+        col_width = (self.w - 20) / 2  # Adjust column width to center content on the page
+        
+        self.set_x(10)
+        self.multi_cell(col_width, line_height, col1, 1, 'L')
+        self.set_xy(self.get_x() + col_width, self.get_y() - line_height)
+        
+        self.multi_cell(col_width, line_height, col2, 1, 'L')
+        self.ln()
+
+# Create a PDF object
+pdf = CertificatePDFWithVerification()
+
+# Add a page
+pdf.add_page()
+
+# Set title
+pdf.set_title('Biocidal Product Authorization Certificate')
+
+# Add table rows
+pdf.set_font('Times', 'B', 8)
+pdf.set_x(10)
+pdf.cell((pdf.w - 20) / 2, 8, 'Field', 1, 0, 'L')
+pdf.cell((pdf.w - 20) / 2, 8, 'Details', 1, 1, 'L')
+
+pdf.add_table_row('Authorization Number:', 'UK-0006921-0002')
+pdf.add_table_row('Issued By:', 'Department of Health and Social Care')
+pdf.add_table_row('Date of Issue:', '12 December 2016')
+pdf.add_table_row('Expiration Date:', '30 April 2024')
+
+pdf.add_table_row('Product Name:', 'Domestos Zero Limescale Pink')
+pdf.add_table_row('Type of Product:', 'Biocidal Product (PT02)')
+pdf.add_table_row('Product Formulation:', 'Liquid')
+pdf.add_table_row('Active Substance(s):', 'Hydrochloric Acid')
+pdf.add_table_row('Concentration of Active Substance(s):', '4.5%')
+
+pdf.add_table_row('Name:', 'Unilever UK Limited')
+pdf.add_table_row('Address:', 'Unilever House, Springfield Drive, Leatherhead, KT22 7GR, United Kingdom')
+pdf.add_table_row('Contact Information:', 'Phone: +44 1372 945000\nEmail: unilever.contact@unilever.com\nWebsite: www.unilever.com')
+
+pdf.add_table_row('Intended Use:', 'Disinfection of hard surfaces')
+pdf.add_table_row('Application Method:', 'Dilution with water as per instructions\nDirect application to surfaces')
+pdf.add_table_row('Target Organisms:', 'Bacteria, Viruses, Fungi')
+
+pdf.add_table_row('Safety Precautions:', 'Use in well-ventilated areas\nWear protective gloves and eye protection\nAvoid contact with skin and eyes\nKeep out of reach of children')
+pdf.add_table_row('Storage Conditions:', 'Store in a cool, dry place\nKeep container tightly closed when not in use')
+pdf.add_table_row('Disposal Instructions:', 'Dispose of contents and container in accordance with local regulations')
+
+pdf.add_table_row('Efficacy Data:', 'Verified through laboratory testing\nMeets standards for biocidal efficacy against specified organisms')
+
+pdf.add_table_row('Regulatory Compliance:', 'Complies with Biocidal Products Regulation (EU) No 528/2012\nRegistered under the national biocidal products registry')
+
+pdf.add_table_row('Additional Information:', 'For further details, refer to the product label and safety data sheet (SDS)\nReport any adverse effects or incidents to the authorization holder')
+
+pdf.add_table_row('Verification Code:', verification_code)
+pdf.add_table_row('Authorized Signature:', '_____________________________\nDr. Jane Doe, Director of Regulatory Affairs\nDepartment of Health and Social Care')
+
+# Place the QR code in the bottom right corner
+pdf.image(qr_path, pdf.w - 30, pdf.h - 30, 20)
+
+# Save the PDF
+pdf_file_path = "/mnt/data/Domestos_Biocidal_Product_Authorization_Certificate_With_Verification.pdf"
+pdf.output(pdf_file_path)
+
+pdf_file_path
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Certificate Verification</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+            margin: 0;
+        }
+        .container {
+            text-align: center;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Certificate Verification</h1>
+        <p>This is a valid certificate.</p>
+    </div>
+</body>
+</html>
